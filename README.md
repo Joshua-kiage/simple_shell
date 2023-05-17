@@ -2,3 +2,5 @@
 C
 Group project
 Syscall
+
+Contibutor: [Patricia Mkoji](https://github.com/PatriciaMkoji)
