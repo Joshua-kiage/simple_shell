@@ -12,8 +12,9 @@ void execute_command(const char *command)
 	char *argument[MAX_COMMAND_LENGTH];
 	char *token;
 	int argument_index = 0;
-	char *path = "/bin/";
+	char *path = "/bin:/usr";
 	char *cmd_path;
+	char *path_copy;
 
 	pid_t pid = fork();
 
@@ -24,20 +25,34 @@ void execute_command(const char *command)
 	}
 	else if (pid == 0)
 	{
+		char command_copy[MAX_COMMAND_LENGTH];
+
+		strncpy(command_copy, command, sizeof(command_copy));
 		token = strtok((char *)command, " \n");
+
 		while (token != NULL && argument_index < MAX_COMMAND_LENGTH - 1)
 		{
 			argument[argument_index++] = token;
 			token = strtok(NULL, " \n");
 		}
 		argument[argument_index] = NULL;
-		cmd_path = (char *)malloc(strlen(path) + strlen(argument[0]) + 1);
-		strcpy(cmd_path, path);
-		strcat(cmd_path, argument[0]);
 
-		execve(cmd_path, argument, NULL);
+		path_copy = strdup(path);
+
+		token = strtok(path_copy, ":");
+
+		while (token != NULL)
+		{
+			cmd_path = (char *)malloc(strlen(path) + strlen(argument[0]) + 2);
+			strcpy(cmd_path, token);
+			strcat(cmd_path, "/");
+			strcat(cmd_path, argument[0]);
+			execve(cmd_path, argument, NULL);
+			free(cmd_path);
+			token = strtok(NULL, ":");
+		}
 		perror("execve");
-		free(cmd_path);
+		free(path_copy);
 		exit(EXIT_FAILURE);
 	}
 	else
