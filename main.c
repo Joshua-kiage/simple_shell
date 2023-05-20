@@ -21,6 +21,8 @@ int main(void)
 		}
 		command[strcspn(command, "\n")] = '\0';
 		execute_command(command);
+		
+
 	}
 	return (0);
 }
