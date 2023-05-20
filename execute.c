@@ -20,7 +20,7 @@ void execute_command(const char *command)
 
 	if (pid < 0)
 	{
-		perror("fork");
+		printf("%s: No such file or directory\n", argument[0]);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
@@ -51,7 +51,7 @@ void execute_command(const char *command)
 			free(cmd_path);
 			token = strtok(NULL, ":");
 		}
-		perror("execve");
+		printf("%s: No such file or directory\n", argument[0]);
 		free(path_copy);
 		exit(EXIT_FAILURE);
 	}
