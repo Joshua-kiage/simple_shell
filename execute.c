@@ -9,8 +9,7 @@
 
 void execute_command(const char *command)
 {
-	char *argument[MAX_COMMAND_LENGTH];
-	char *token;
+	char *argument[MAX_COMMAND_LENGTH], *token;
 	int argument_index = 0;
 	char *path = "/bin:/usr";
 	char *cmd_path;
