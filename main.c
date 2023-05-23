@@ -1,28 +1,33 @@
 #include "shell.h"
-#define MAX_COMMAND_LENGTH 100
 
-/**
- * main - Entry point for the simple_shell program.
- * Return: Always returns 0.
- */
-
-int main(void)
+int main()
 {
-	char command[MAX_COMMAND_LENGTH];
-
+	char *command = NULL;
+	size_t command_length = 0;
+	ssize_t read;
+	
 	while (1)
 	{
-		printf("simple_shell> ");
+		_printf("simpleshell> ");
+		read = getline(&command, &command_length, stdin);
 
-		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
+		if (read == -1)
 		{
-			printf("\n");
-			break;
+			if (feof(stdin))
+			{
+				_printf("\n");  /* Print a new line after Ctrl+D */
+				exit(EXIT_SUCCESS);
+			}
+			_printf("Error reading command.\n");
+			continue;
 		}
-		command[strcspn(command, "\n")] = '\0';
-		execute_command(command);
-		
 
+		/* Remove the newline character from the command */
+		if (command[read - 1] == '\n')
+			command[read - 1] = '\0';
+
+		execute_command(command);
 	}
+	free(command);
 	return (0);
 }
