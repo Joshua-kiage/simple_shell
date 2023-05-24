@@ -4,7 +4,6 @@
 /**
  * _printf - Custom implementation of printf function
  * @format: Format string
- * 
  * Description: This function mimics the behavior of the printf function.
  * It takes a format string and variable number of arguments, and prints
  * formatted output accordingly.
@@ -12,6 +11,7 @@
 void _printf(const char *format, ...)
 {
 	va_list args;
+
 	va_start(args, format);
 
 	while (*format != '\0')

@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * my_strdup - Duplicates a string
+ * _strdup - Duplicates a string
  * @str: The string to be duplicated
  *
  * Return: On success, a pointer to the duplicated string.
@@ -12,11 +12,12 @@ char *_strdup(const char *str)
 	size_t length = strlen(str);
 
 	duplicate = (char *)malloc((length + 1) * sizeof(char));
-	if (duplicate == NULL) {
+	if (duplicate == NULL)
+	{
 		fprintf(stderr, "Memory allocation failed\n");
-		return NULL;
+		return (NULL);
 	}
 
 	strcpy(duplicate, str);
-	return duplicate;
+	return (duplicate);
 }
