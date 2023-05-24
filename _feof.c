@@ -2,7 +2,7 @@
 #include "shell.h"
 
 /**
- * custom_feof - Custom implementation of feof function.
+ * _feof - Custom implementation of feof function.
  * @file: Pointer to the file.
  *
  * Return: 1 if EOF reached, 0 otherwise.
