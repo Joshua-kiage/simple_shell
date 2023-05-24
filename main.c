@@ -8,8 +8,7 @@ int main()
 	
 	while (1)
 	{
-		_printf("simpleshell> ");
-		fflush(stdout);  /* Flush the output buffer to display the prompt immediately */
+		_printf("($) ");
 		read = getline(&command, &command_length, stdin);
 
 		if (read == -1)

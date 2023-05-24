@@ -1,0 +1,19 @@
+#include "shell.h"
+#include <stdio.h>
+
+/**
+ * inbuilt_feof - Checks if the end-of-file indicator is set for a given file stream.
+ * @stream: Pointer to the file stream.
+ *
+ * Return:
+ *    0 if the end-of-file indicator is not set.
+ *    Non-zero value if the end-of-file indicator is set.
+ */
+
+int _feof(FILE *stream)
+{
+	if (stream == NULL)
+		return (0);  /* Invalid stream, end-of-file indicator not set */
+
+	return (stream->_flags & _IOEOF);  /* Return the value of the end-of-file indicator */
+}

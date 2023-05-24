@@ -17,5 +17,6 @@ void _printf(const char *format, ...);
 char *_strcat(char *dest, const char *src);
 char *_strdup(const char *str);
 int _strcmp(const char *s1, const char *s2);
+int _feof(FILE *stream);
 
 #endif
