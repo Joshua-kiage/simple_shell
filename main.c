@@ -1,24 +1,20 @@
 #include "shell.h"
 
-/**
- * main - Entry point for the shell program
- *
- * Return: Always returns 0.
- */
-int main(void)
+int main()
 {
 	char *command = NULL;
 	size_t command_length = 0;
 	ssize_t read;
-
+	
 	while (1)
 	{
 		_printf("simpleshell> ");
+		fflush(stdout);  /* Flush the output buffer to display the prompt immediately */
 		read = getline(&command, &command_length, stdin);
 
 		if (read == -1)
 		{
-			if (isatty(fileno(stdin)) == 0)
+			if (feof(stdin))
 			{
 				_printf("\n");  /* Print a new line after Ctrl+D */
 				exit(EXIT_SUCCESS);
@@ -34,6 +30,5 @@ int main(void)
 		execute_command(command);
 	}
 	free(command);
-	return 0;
+	return (0);
 }
-
