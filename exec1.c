@@ -35,7 +35,7 @@ void execute_command(const char *command)
 			free(command_copy);  /* Free the copied string before returning */
 			while (*env != NULL)
 			{
-				printf("%s\n", *env);
+				_printf("%s\n", *env);
 				env++;
 			}
 			return;

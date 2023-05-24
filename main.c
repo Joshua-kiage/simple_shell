@@ -1,11 +1,16 @@
 #include "shell.h"
 
-int main()
+/**
+ * main - Entry point for the shell program
+ *
+ * Return: Always returns 0.
+ */
+int main(void)
 {
 	char *command = NULL;
 	size_t command_length = 0;
 	ssize_t read;
-	
+
 	while (1)
 	{
 		_printf("simpleshell> ");
@@ -13,7 +18,7 @@ int main()
 
 		if (read == -1)
 		{
-			if (feof(stdin))
+			if (isatty(fileno(stdin)) == 0)
 			{
 				_printf("\n");  /* Print a new line after Ctrl+D */
 				exit(EXIT_SUCCESS);
@@ -29,5 +34,6 @@ int main()
 		execute_command(command);
 	}
 	free(command);
-	return (0);
+	return 0;
 }
+
