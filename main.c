@@ -26,7 +26,7 @@ int main(void)
 
 		if (read == -1)
 		{
-			if (feof(stdin))
+			if (_feof(stdin))
 			{
 				if (is_interactive)
 					_printf("\n");
