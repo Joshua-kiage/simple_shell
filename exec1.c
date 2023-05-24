@@ -1,8 +1,8 @@
 #include "shell.h"
 #define MAX_COMMAND_LENGTH 100
 /**
- * execute_command - Executes a command in a child process
- * @command: The command to be executed
+ * execute_command - as executes a command in a child process
+ * @command: its command to be executed
  */
 void execute_command(const char *command)
 {

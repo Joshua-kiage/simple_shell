@@ -1,11 +1,9 @@
 #include "shell.h"
 /**
- * _strcat - Concatenates two strings
+ * _strcat - it oncatenates the two strings
  * @dest: The destination string
- * @src: The source string
- * Description: This function appends the content of the source string to
- * the destination string, overwriting the terminating null byte at the end
- * Return: Pointer to the destination string
+ * @src: source string
+ * Return: Pointer that points to the destination string
  */
 char *_strcat(char *dest, const char *src)
 {
