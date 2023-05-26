@@ -1,18 +1,30 @@
 #include "shell.h"
-
-char* integerToString(int number)
+/**
+ * integerToString - Convert an integer to a string
+ * @number: The integer to be converted
+ * Return: A pointer to a dynamically allocated string representing the integer,
+ *         or NULL if memory allocation fails.
+ */
+char *integerToString(int number)
 {
-	int length = snprintf(NULL, 0, "%d", number);  
-	char* str = (char*)malloc(length + 1);  
-	snprintf(str, length + 1, "%d", number);  
-	return str;
-}
+	int length = snprintf(NULL, 0, "%d", number);
+	char *str = (char *)malloc(length + 1);
 
+	snprintf(str, length + 1, "%d", number);
+	return (str);
+}
+/**
+ * _print_error - Print an error message to stderr
+ * @argv: The argument vector of the program
+ * @command_number: The number of the command being executed
+ * @command: The command that was not found
+ */
 void _print_error(char **argv, int command_number, char *command)
 {
 	char *error_msg;
 	char *str = integerToString(command_number);
 	int len = strlen(argv[0]) + (2 * strlen(": ")) + strlen(command) + strlen(": not found\n") + 2;
+
 	error_msg = (char *)malloc(sizeof(char) * len);
 	if (error_msg == NULL)
 		exit(EXIT_FAILURE);
