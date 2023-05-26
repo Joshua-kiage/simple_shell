@@ -60,11 +60,12 @@ char *command_path(char *command, char *delim)
 				free(cmd_path);
 				token = strtok(NULL, ":");
 			}
-			if (stat(command, &st) == 0)
+			if (stat(arg[0], &st) == 0)
 			{
+				cmd_path = _strdup(arg[0]);
 				free(path_copy);
 				free_array(arg);
-				return (_strdup(command));
+				return (cmd_path);
 			}
 			free(path_copy);
 			free_array(arg);

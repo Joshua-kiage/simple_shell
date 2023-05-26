@@ -89,7 +89,7 @@ void _print_error2(char **argv, int command_number, char *command)
 	_strcat(error_msg, "Can't open ");
         _strcat(error_msg, command);
 	_strcat(error_msg, "\n\0");
-        write(STDERR_FILENO, error_msg, len);
+        write(STDERR_FILENO, error_msg, strlen(error_msg));
         free(error_msg);
         free(str);
 }
