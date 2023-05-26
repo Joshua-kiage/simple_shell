@@ -27,7 +27,7 @@ int main(__attribute((unused)) int ac, char **argv)
 		if (is_interactive)
 			_printf("($) ");
 
-		read = getline(&command, &command_length, stdin);
+		read = _getline(&command, &command_length, stdin);
 
 		if (read == -1)
 		{
