@@ -76,8 +76,8 @@ char *command_path(char *command, char *delim)
 	return (NULL);
 }
 /**
- * execute_command - Executes a command in a child process
- * @command: The command to be executed
+ * execute_command - as executes a command in a child process
+ * @command: its command to be executed
  */
 int execute_command(char *command, char **argument)
 {

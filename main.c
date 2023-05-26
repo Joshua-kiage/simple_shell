@@ -1,20 +1,19 @@
 #include "shell.h"
 
 /**
- * main - Entry point of the shell program
- *
- * Description: This function implements a simple shell program that
- * reads user commands, executes them, and provides a prompt for
- * the next command. It supports the built-in exit command to
- * terminate the shell.
- *
- * Return: Always returns 0.
+ * main - entry point of the shell program
+ * Return: As always returns 0.
  */
 int main(__attribute((unused)) int ac, char **argv)
 {
 	char *command = NULL;
+<<<<<<< HEAD
 	size_t command_length = 0;
 	ssize_t read = 0;
+=======
+	size_t command_len = 0;
+	ssize_t read;
+>>>>>>> 8a232ec7aeee4597bdfd42b68123132c9710a696
 	int is_interactive = isatty(STDIN_FILENO);
 	int command_number = 0;
 	char **argument = NULL;
@@ -27,7 +26,7 @@ int main(__attribute((unused)) int ac, char **argv)
 		if (is_interactive)
 			_printf("($) ");
 
-		read = getline(&command, &command_length, stdin);
+		read = getline(&command, &command_len, stdin);
 
 		if (read == -1)
 		{

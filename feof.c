@@ -2,10 +2,9 @@
 #include "shell.h"
 
 /**
- * _feof - Custom implementation of feof function.
- * @file: Pointer to the file.
- *
- * Return: 1 if EOF reached, 0 otherwise.
+ * _feof - it Customises the implementation of feof.
+ * @file: it points to the file.
+ * Return: 1 if EOF else is 0 otherwise.
  */
 
 int _feof(FILE *file)
