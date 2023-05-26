@@ -1,51 +1,112 @@
 #include "shell.h"
 #define MAX_COMMAND_LENGTH 100
+
+int argument_count(char *command, char *delim)
+{
+	int argument_index = 0;
+	char *token;
+	char *command_copy = strdup(command);
+	token = strtok(command_copy, delim);
+	while (token != NULL)
+	{
+		argument_index++;
+		token = strtok(NULL, delim);
+	}
+	free(command_copy);
+	return (argument_index);
+}
+char **argument_array(char *command, char *delim)
+{
+	char *token;
+	int i = 0;
+	char *command_copy = strdup(command);
+	char **argument = malloc(sizeof(char *) * (argument_count(command, delim) +1));
+	token = strtok(command_copy, delim);
+	while (token != NULL)
+	{
+		argument[i] = malloc(sizeof(char) * (strlen(token) +1));
+		strcpy(argument[i], token);
+		i++;
+		token = strtok(NULL, delim);
+	}
+	argument[i] = NULL;
+	free(command_copy);
+	return (argument);
+}
+char *command_path(char *command, char *delim)
+{
+	char **arg = argument_array(command, delim);
+	char *token, *path_copy, *cmd_path;
+	char *path = getenv("PATH");
+	struct stat st;
+	if (path != NULL)
+	{
+		if (arg[0] != NULL)
+		{
+			path_copy = strdup(path);
+			token = strtok(path_copy, ":");
+			while (token != NULL)
+			{
+				cmd_path = (char *)malloc(sizeof(char) * (strlen(token) + strlen(arg[0]) + 2));
+				strcpy(cmd_path, token);
+				strcat(cmd_path, "/");
+				strcat(cmd_path, arg[0]);
+				strcat(cmd_path, "\0");
+				if (stat(cmd_path, &st) == 0)
+				{
+					free(path_copy);
+					free_array(arg);
+					return (cmd_path);
+				}
+				free(cmd_path);
+				token = strtok(NULL, ":");
+			}
+			if (stat(command, &st) == 0)
+			{
+				free(path_copy);
+				free_array(arg);
+				return (strdup(command));
+			}
+			free(path_copy);
+			free_array(arg);
+
+		}
+	}
+	free(cmd_path);
+	return (NULL);
+}
 /**
  * execute_command - Executes a command in a child process
  * @command: The command to be executed
  */
-void execute_command(const char *command)
+int execute_command(char *command, char **argument)
 {
 	pid_t pid;
-	char *argument[MAX_COMMAND_LENGTH], *token, *path_copy, *cmd_path;
-	int argument_index = 0;
-	char *path = "/bin:/usr";
+	int status;
 
 	pid = fork();
 	if (pid < 0)
 	{
 		_printf("%s: No such file or directory\n", argument[0]);
-		exit(EXIT_FAILURE);
+		return(-1);
 	}
-	else if (pid == 0)
+	if (pid == 0)
 	{
-		char *command_copy = _strdup(command);
-
-		token = strtok(command_copy, " \n");
-		while (token != NULL && argument_index < MAX_COMMAND_LENGTH - 1)
+		if (execve(command, argument, __environ) == -1)
 		{
-			argument[argument_index++] = token;
-			token = strtok(NULL, " \n");
+			perror("execve: ");
+			return (-1);
 		}
-		argument[argument_index] = NULL;
-		path_copy = _strdup(path);
-		token = strtok(path_copy, ":");
-		while (token != NULL)
-		{
-			cmd_path = (char *)malloc(strlen(path) + strlen(argument[0]) + 2);
-			_strcpy(cmd_path, token);
-			_strcat(cmd_path, "/");
-			_strcat(cmd_path, argument[0]);
-			execve(cmd_path, argument, NULL);
-			free(cmd_path);
-			token = strtok(NULL, ":");
-		}
-		_printf("%s: No such file or directory\n", argument[0]);
-		free(path_copy);
-		exit(EXIT_FAILURE);
 	}
 	else
-		wait(NULL);
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		if (!isatty(STDIN_FILENO))
+			return (status);
+	}
+	return (0);
 }
 /**
  * tokenize_string - Tokenizes a string into an array of tokens
