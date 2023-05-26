@@ -1,6 +1,5 @@
 #include "shell.h"
 #define MAX_COMMAND_LENGTH 100
-
 int argument_count(char *command, char *delim)
 {
 	int argument_index = 0;
@@ -76,14 +75,13 @@ char *command_path(char *command, char *delim)
 	return (NULL);
 }
 /**
- * execute_command - as executes a command in a child process
- * @command: its command to be executed
+ * execute_command - Executes a command in a child process
+ * @command: The command to be executed
  */
 int execute_command(char *command, char **argument)
 {
 	pid_t pid;
 	int status;
-
 	pid = fork();
 	if (pid < 0)
 	{
@@ -118,7 +116,6 @@ char *tokenize_string(const char *command)
 	char *command_copy;
 	char **env = environ;
 	char *token;
-
 	command_copy = _strdup(command);  /* Create a non-constant copy */
 	token = strtok(command_copy, " \n");
 	if (token != NULL && _strcmp(token, "exit") == 0)
