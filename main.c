@@ -46,7 +46,6 @@ int main(__attribute((unused)) int ac, char **argv)
 
 		argument = argument_array((char *) command, " \n");
 		cmd_path = command_path((char *) command, " \n");
-		free(command);
 		if (cmd_path != NULL)
 		{
 			status = execute_command(cmd_path, argument);
@@ -59,6 +58,7 @@ int main(__attribute((unused)) int ac, char **argv)
 		}
 		if (argument[0] != NULL)
 			free_array(argument);
+		free(command);
 		command = NULL;
 	}
 	return (0);

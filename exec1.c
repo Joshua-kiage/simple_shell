@@ -71,7 +71,7 @@ char *command_path(char *command, char *delim)
 
 		}
 	}
-	free(cmd_path);
+	/* free(cmd_path); */
 	return (NULL);
 }
 /**
