@@ -27,4 +27,7 @@ int argument_count(char *command, char *delim);
 char **argument_array(char *command, char *delim);
 char *command_path(char *command, char *delim);
 void free_array(char **arr);
+char* integerToString(int number);
+void _print_error2(char **argv, int command_number, char *command);
+
 #endif

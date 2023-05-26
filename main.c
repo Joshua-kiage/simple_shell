@@ -21,6 +21,13 @@ int main(__attribute((unused)) int ac, char **argv)
 	char *cmd_path = NULL;
 	int status = 0;
 
+	
+	if(ac > 1)
+	{
+		_print_error2(argv, command_number, argv[1]);
+		exit(127);
+	}
+
 	while (1)
 	{
 		command_number++;
@@ -62,4 +69,27 @@ int main(__attribute((unused)) int ac, char **argv)
 		command = NULL;
 	}
 	return (0);
+}
+
+void _print_error2(char **argv, int command_number, char *command)
+{
+        char *error_msg;
+        char *str = integerToString(command_number);
+        int len = strlen(argv[0]) + (2 * strlen(": ")) + strlen(command) + strlen("Can't open ") + 2;
+        error_msg = (char *)malloc(sizeof(char) * len);
+        if (error_msg == NULL)
+	{
+		fprintf(stderr, "Memory allocation error.\n");
+                exit(EXIT_FAILURE);
+	}
+	_strcpy(error_msg, argv[0]);
+        _strcat(error_msg, ": ");
+        _strcat(error_msg, str);
+        _strcat(error_msg, ": ");
+	_strcat(error_msg, "Can't open ");
+        _strcat(error_msg, command);
+	_strcat(error_msg, "\n\0");
+        write(STDERR_FILENO, error_msg, len);
+        free(error_msg);
+        free(str);
 }
