@@ -4,7 +4,7 @@ int argument_count(char *command, char *delim)
 {
 	int argument_index = 0;
 	char *token;
-	char *command_copy = strdup(command);
+	char *command_copy = _strdup(command);
 	token = strtok(command_copy, delim);
 	while (token != NULL)
 	{
@@ -18,13 +18,13 @@ char **argument_array(char *command, char *delim)
 {
 	char *token;
 	int i = 0;
-	char *command_copy = strdup(command);
+	char *command_copy = _strdup(command);
 	char **argument = malloc(sizeof(char *) * (argument_count(command, delim) +1));
 	token = strtok(command_copy, delim);
 	while (token != NULL)
 	{
 		argument[i] = malloc(sizeof(char) * (strlen(token) +1));
-		strcpy(argument[i], token);
+		_strcpy(argument[i], token);
 		i++;
 		token = strtok(NULL, delim);
 	}
@@ -47,10 +47,10 @@ char *command_path(char *command, char *delim)
 			while (token != NULL)
 			{
 				cmd_path = (char *)malloc(sizeof(char) * (strlen(token) + strlen(arg[0]) + 2));
-				strcpy(cmd_path, token);
-				strcat(cmd_path, "/");
-				strcat(cmd_path, arg[0]);
-				strcat(cmd_path, "\0");
+				_strcpy(cmd_path, token);
+				_strcat(cmd_path, "/");
+				_strcat(cmd_path, arg[0]);
+				_strcat(cmd_path, "\0");
 				if (stat(cmd_path, &st) == 0)
 				{
 					free(path_copy);
@@ -64,7 +64,7 @@ char *command_path(char *command, char *delim)
 			{
 				free(path_copy);
 				free_array(arg);
-				return (strdup(command));
+				return (_strdup(command));
 			}
 			free(path_copy);
 			free_array(arg);
@@ -133,7 +133,7 @@ char *tokenize_string(const char *command)
 			free(command_copy);  /* Free the copied string before returning */
 			while (*env != NULL)
 			{
-				printf("%s\n", *env);
+				_printf("%s\n", *env);
 				env++;
 			}
 			return (NULL);
